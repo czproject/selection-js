@@ -1,14 +1,14 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-2
+ * @version		2013-02-25-3
  */
 
 var Cz = Cz || {};
 Cz.Selection = Cz.Selection || {};
 
 Cz.Selection.getText = function (textarea) {
-	return textarea.value.substr(start = this.getStartPos(textarea), this.getEndPos(textarea) - start);
+	return textarea.value.substring(this.getStartPos(textarea), this.getEndPos(textarea));
 };
 
 
