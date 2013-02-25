@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-4
+ * @version		2013-02-25-5
  */
 
 var Cz = Cz || {};
@@ -18,6 +18,13 @@ Cz.Selection.getLines = function (textarea) {
 	var endPos = selEndPos + textarea.value.substring(selEndPos).indexOf("\n");
 	
 	return textarea.value.substring(startPos + 1, endPos).replace("\r", '').split("\n");
+};
+
+
+Cz.Selection.insert = function (textarea, pos, text) {
+	textarea.value = textarea.value.substring(0, pos) +
+		text +
+		textarea.value.substring(pos);
 };
 
 
