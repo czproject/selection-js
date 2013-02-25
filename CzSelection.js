@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-9
+ * @version		2013-02-25-10
  */
 
 var Cz = Cz || {};
@@ -44,6 +44,27 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 	var start = this.getStartPos(textarea);
 	var end = this.getEndPos(textarea);
+	var value = textarea.value;
+	
+	// normalize start
+	var io = value.substring(start - prefix.length, start + prefix.length).indexOf(prefix);
+	if(io >= 0)
+	{
+		if((start - prefix.length) < 0)
+		{
+			start += (start - prefix.length) * -1;
+		}
+		
+		start += io;
+	}
+	
+	// normalize end
+	var io = value.substring(end - suffix.length, end + suffix.length).indexOf(suffix);
+	if(io >= 0)
+	{
+		end -= (suffix.length - io);
+	}
+	
 	var first = textarea.value.substring(0, start);
 	var second = textarea.value.substring(end);
 	
