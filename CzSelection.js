@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-6
+ * @version		2013-02-25-7
  */
 
 var Cz = Cz || {};
@@ -13,11 +13,10 @@ Cz.Selection.getText = function (textarea) {
 
 
 Cz.Selection.getLines = function (textarea) {
-	var selEndPos = this.getEndPos(textarea);
-	var startPos = textarea.value.substring(0, this.getStartPos(textarea)).lastIndexOf("\n");
-	var endPos = selEndPos + textarea.value.substring(selEndPos).indexOf("\n");
+	var startPos = this.getStartLinePos(textarea);
+	var endPos = this.getEndLinePos(textarea);
 	
-	return textarea.value.substring(startPos + 1, endPos).replace("\r", '').split("\n");
+	return textarea.value.substring(startPos, endPos).replace("\r", '').split("\n");
 };
 
 
@@ -55,5 +54,16 @@ Cz.Selection.getEndPos = function (textarea) {
 
 Cz.Selection.getLength = function (textarea) {
 	return this.getEndPos(textarea) - this.getStartPos(textarea);
+};
+
+
+Cz.Selection.getStartLinePos = function (textarea) {
+	return textarea.value.substring(0, this.getStartPos(textarea)).lastIndexOf("\n") + 1;
+};
+
+
+Cz.Selection.getEndLinePos = function (textarea) {
+	var selEndPos = this.getEndPos(textarea);
+	return selEndPos + textarea.value.substring(selEndPos).indexOf("\n");
 };
 
