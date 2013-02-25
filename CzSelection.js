@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-8
+ * @version		2013-02-25-9
  */
 
 var Cz = Cz || {};
@@ -59,6 +59,65 @@ Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 };
 
 
+Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
+	if(typeof ignoreSpaces === "undefined")
+	{
+		ignoreSpaces = true;
+	}
+	
+	// convert to (bool)
+	ignoreSpaces = !!ignoreSpaces;
+	
+	var start = this.getStartLinePos(textarea);
+	var end = this.getEndLinePos(textarea);
+	var lines = this.getLines(textarea);
+	var res = new Array();
+	var first = textarea.value.substring(0, start - 1);
+	
+	if(first != '')
+	{
+		res.push(first);
+	}
+	
+	for(var i = 0; i < lines.length; i++)
+	{
+		if(!ignoreSpaces)
+		{
+			res.push(prefix + lines[i] + suffix);
+		}
+		else
+		{
+			var trimed = this.trim(lines[i]);
+			
+			if(trimed == '') // ignore empty lines
+			{
+				res.push(lines[i]);
+				continue;
+			}
+			
+			var trimedLen = trimed.length;
+			var firstCharPos = lines[i].indexOf(trimed[0]);
+			trimed = prefix + trimed + suffix;
+			trimed = lines[i].substring(0, firstCharPos) + trimed;
+			trimedLen += firstCharPos;
+			trimed += lines[i].substring(trimedLen);
+			
+			res.push(trimed);
+		}
+	}
+	
+	first = textarea.value.substring(end + 1);
+	
+	if(first != '')
+	{
+		res.push(first);
+	}
+	
+	textarea.value = res.join("\n");
+	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
+};
+
+
 Cz.Selection.getStartPos = function (textarea) {
 	return textarea.selectionStart;
 };
@@ -82,5 +141,15 @@ Cz.Selection.getStartLinePos = function (textarea) {
 Cz.Selection.getEndLinePos = function (textarea) {
 	var selEndPos = this.getEndPos(textarea);
 	return selEndPos + textarea.value.substring(selEndPos).indexOf("\n");
+};
+
+
+Cz.Selection.trim = function (str) {
+	if(String.prototype.trim)
+	{
+		return str.trim();
+	}
+	
+	return str.replace(/^\s+|\s+$/g,'');
 };
 
