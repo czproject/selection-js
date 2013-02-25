@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-10
+ * @version		2013-02-25-11
  */
 
 var Cz = Cz || {};
@@ -83,7 +83,7 @@ Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	if(typeof ignoreSpaces === "undefined")
 	{
-		ignoreSpaces = true;
+		ignoreSpaces = false;
 	}
 	
 	// convert to (bool)
