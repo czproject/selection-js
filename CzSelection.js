@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-5
+ * @version		2013-02-25-6
  */
 
 var Cz = Cz || {};
@@ -25,6 +25,21 @@ Cz.Selection.insert = function (textarea, pos, text) {
 	textarea.value = textarea.value.substring(0, pos) +
 		text +
 		textarea.value.substring(pos);
+};
+
+
+Cz.Selection.wrap = function (textarea, prefix, suffix) {
+	var start = this.getStartPos(textarea);
+	var end = this.getEndPos(textarea);
+	
+	textarea.value = textarea.value.substring(0, start) +
+		prefix +
+		textarea.value.substring(start, end)
+		+ suffix
+		+ textarea.value.substring(end);
+	
+	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix
+	// TODO: nastaveni pozice kurzoru
 };
 
 
