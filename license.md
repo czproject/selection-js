@@ -1,5 +1,5 @@
 New BSD License
-###############
+---------------
 
 Copyright © 2013 Jan Pecha (http://janpecha.iunas.cz/) All rights reserved.
 
