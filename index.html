@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="Jan Pecha, http://janpecha.iunas.cz/">
+	<meta name="viewport" content="width=device-width">
+	
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6em;
+			background: #f8f8f8;
+		}
+		
+		#wrapper {
+			max-width: 1024px;
+			margin: 0 auto;
+			padding-top: 2em;
+			padding-bottom: 1em;
+		}
+		
+		#footer {
+			font-size: 90%;
+			margin-top: 4em;
+			color: gray;
+		}
+		
+		h1, h2, h3 {
+			color: #444;
+		}
+		
+		h2 {
+			border-top: 1px solid #ccc;
+			padding-top: 0.4em;
+		}
+		
+		h3 {
+			margin-bottom: 0.3em;
+		}
+		
+		h2, h3 {
+			position: relative;
+		}
+		
+		h2:hover:after, h3:hover:after {
+			content: "#" attr(id);
+			font-size: 50%;
+			margin-left: 0.7em;
+			position: absolute;
+			top: 1.1em;
+		}
+		
+		h3:hover:after {
+			top: 0.4em;
+			font-size: 60%;
+		}
+		
+		p {
+			margin: 0 0 1em;
+		}
+		
+		textarea {
+			margin: 0 auto 1em;
+			display: block;
+			padding: 1em;
+			line-height: 1.4em;
+			resize: none;
+		}
+		
+		hr {
+			border: none;
+			border-top: 1px dotted silver;
+		}
+		
+		a:link {
+			color: #0044aa;
+		}
+
+		a:visited {
+			color: #00255c;
+		}
+
+		a:hover {
+			color: #d22;
+		}
+		
+		.toolbar {
+			margin-bottom: 1em;
+			text-align: center;
+		}
+		
+		.description {
+			margin: 0;
+			color: #333;
+		}
+		
+		.avatar {
+			border-radius: 4px;
+			display: block;
+			border: none;
+		}
+	</style>
+	
+	<title>CzSelection - JS library</title>
+</head>
+<body>
+	<div id="wrapper">
+		<h1>CzSelection - JS library</h1>
+		
+		<h2 id="example">Example</h2>
+		<textarea id="myarea" rows="20" cols="80" spellcheck="false">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis aute irure dolor
+in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Fusce tellus. Duis ante orci, molestie vitae vehicula venenatis, tincidunt ac
+pede. Maecenas sollicitudin. Integer tempor. Curabitur sagittis hendrerit ante.
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer in sapien.
+
+Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
+saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+
+Vivamus luctus egestas leo. Curabitur sagittis hendrerit ante. Quisque tincidunt
+scelerisque libero. Etiam neque. Nullam faucibus mi quis velit. Ut enim ad minim
+veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Etiam sapien elit, consequat eget, tristique non, venenatis quis,
+ante. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
+voluptatibus maiores alias consequatur aut perferendis doloribus asperiores
+repellat. Aenean vel massa quis mauris vehicula lacinia. Proin pede metus,
+vulputate nec, fermentum fringilla, vehicula vitae, justo.
+</textarea>
+		
+		<div class="toolbar">
+			<button id="btn-get-text" title="Get selected text from textarea">getText()</button>
+			<button id="btn-get-lines" title="Get selected lines from textarea">getLines()</button>
+			<button id="btn-get-length" title="Get selection length">getLength()</button>
+		</div>
+		
+		<div class="toolbar">
+			<button id="btn-wrap" title="Wrap selected text.">wrap()</button>
+			<button id="btn-unwrap" title="Unwrap selected text.">unwrap()</button>
+			<button id="btn-wrap-lines" title="Wrap selected lines.">wrapLines()</button>
+			<button id="btn-unwrap-lines" title="Unwrap selected lines.">unwrapLines()</button>
+			<button id="btn-insert" title="Insert text at a position.">insert()</button>
+		</div>
+		
+<!--		<h2 id="docs">Docs</h2>-->
+<!--		<h3>Step 1</h3>-->
+<!--		<pre>&lt;script src="CzSelection.js">&lt;/script></pre>-->
+<!--		-->
+<!--		<h3>Step 2</h3>-->
+<!--		<pre>&lt;textarea id="my-textarea"-->
+<!--		<pre>&lt;button onclick="myFunc();">Any action&lt;/button></pre>-->
+<!--		-->
+		
+		
+		
+		<h2 id="api">API</h2>
+		<h3 id="api-get-text">Cz.Selection.getText(<code>textarea</code>)</h3>
+		<p>
+			<span class="description">Gets selected text.</span>
+			Returns <code>String</code>.
+		</p>
+		
+		<h3 id="api-get-lines">Cz.Selection.getLines(<code>textarea</code>)</h3>
+		<p>
+			<span class="description">Gets selected lines.</span>
+			Returns array of strings.
+		</p>
+		
+		<h3 id="api-get-length">Cz.Selection.getLength(<code>textarea</code>)</h3>
+		<p>
+			<span class="description">Gets length of selected text.</span>
+			Returns <code>int</code>.
+		</p>
+		
+		<hr>
+		
+		<h3 id="api-wrap">Cz.Selection.wrap(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>)</h3>
+		<p>
+			<span class="description">Wraps selected text.</span>
+			Returns <code>void</code>.
+		</p>
+		
+		<h3 id="api-unwrap">Cz.Selection.unwrap(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>)</h3>
+		<p>
+			<span class="description">Unwraps selected text.</span>
+			Returns <code>void</code>.
+		</p>
+		
+		<h3 id="api-wrap-lines">Cz.Selection.wrapLines(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>, <code>ignoreSpaces = FALSE</code>)</h3>
+		<p>
+			<span class="description">Wraps selected lines.</span>
+			Returns <code>void</code>.
+		</p>
+		
+		<h3 id="api-unwrap-lines">Cz.Selection.unwrapLines(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>, <code>ignoreSpaces = FALSE</code>)</h3>
+		<p>
+			<span class="description">Unwraps selected lines.</span>
+			Returns <code>void</code>.
+		</p>
+		
+		<h2 id="source">Source</h2>
+		<p>See repository <a href="http://github.com/czproject/selection-js/">czproject/selection-js</a> on server <a href="http://github.com/">GitHub.com</a>.</p>
+		
+		<h2 id="license">License</h2>
+<p>Copyright © 2013 Jan Pecha (<a href="http://janpecha.iunas.cz/">http://janpecha.iunas.cz/</a>) All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:</p>
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this
+  list of conditions and the following disclaimer in the documentation and/or
+  other materials provided with the distribution.</li>
+<li>Neither the name of “Cz Project“ nor the names of its contributors may be used to
+  endorse or promote products derived from this software without specific prior
+  written permission.</li>
+</ul>
+
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+		
+		<div id="footer">
+			Author: <a href="http://janpecha.iunas.cz/">Jan Pecha</a> &copy; 2013
+			<a href="http://janpecha.iunas.cz/"><img class="avatar" src="http://www.gravatar.com/avatar/c9c2bb1ce4ab220348c179220ae947dc.png?s=40" width="40" height="40"></a>
+		</div>
+	</div>
+	
+	<script src="CzSelection.js"></script>
+	<script src="jasno.js"></script> <!-- JavaScript Framework (for event binding) -->
+	<script type="text/javascript">
+		var textarea = document.getElementById('myarea');
+		
+		// Get Text
+		Jasno.addEvent(document.getElementById('btn-get-text'), 'click', function() {
+			alert(Cz.Selection.getText(textarea));
+			textarea.focus();
+		});
+		
+		// Get Lines
+		Jasno.addEvent(document.getElementById('btn-get-lines'), 'click', function() {
+			alert(Cz.Selection.getLines(textarea).join("\n-----\n"));
+			textarea.focus();
+		});
+		
+		// Get Length
+		Jasno.addEvent(document.getElementById('btn-get-length'), 'click', function() {
+			alert(Cz.Selection.getLength(textarea));
+			textarea.focus();
+		});
+		
+		// Insert
+		//Jasno.addEvent(document.getElementById('btn-insert'), 'click', function() {
+		//	var text = window.prompt('Insert a text', ' :) ');
+		//	Cz.Selection.insert(textarea, 10, text);
+		//	textarea.focus();
+		//});
+		
+		// Wrap
+		Jasno.addEvent(document.getElementById('btn-wrap'), 'click', function() {
+			var text = window.prompt('Insert a text', ' :) ');
+			Cz.Selection.wrap(textarea, text, '!!! ');
+			textarea.focus();
+		});
+		
+		// Unwrap
+		Jasno.addEvent(document.getElementById('btn-unwrap'), 'click', function() {
+			var text = window.prompt('Insert a text', ' :) ');
+			Cz.Selection.unwrap(textarea, text, '!!! ');
+			textarea.focus();
+		});
+		
+		// Wrap Lines
+		Jasno.addEvent(document.getElementById('btn-wrap-lines'), 'click', function() {
+			var text = window.prompt('Insert a text', ' :) ');
+			Cz.Selection.wrapLines(textarea, text, '!!!');
+			textarea.focus();
+		});
+		
+		// Unwrap Lines
+		Jasno.addEvent(document.getElementById('btn-unwrap-lines'), 'click', function() {
+			var text = window.prompt('Insert a text', ' :) ');
+			Cz.Selection.unwrapLines(textarea, text, '!!!');
+			textarea.focus();
+		});
+	</script>
+</body>
+</html>
