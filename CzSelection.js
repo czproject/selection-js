@@ -1,7 +1,7 @@
 /** Cz Selection Library
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-11
+ * @version		2013-02-25-12
  */
 
 var Cz = Cz || {};
@@ -139,6 +139,73 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 };
 
 
+Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
+	if(typeof ignoreSpaces === "undefined")
+	{
+		ignoreSpaces = false;
+	}
+	
+	ignoreSpaces = !!ignoreSpaces; // convert to (bool)
+	
+	var start = this.getStartLinePos(textarea);
+	var end = this.getEndLinePos(textarea);
+	var lines = this.getLines(textarea);
+	var res = new Array();
+	var first = textarea.value.substring(0, start - 1);
+	
+	if(first != '')
+	{
+		res.push(first);
+	}
+	
+	for(var i = 0; i < lines.length; i++)
+	{
+		if(!ignoreSpaces)
+		{
+			if((lines[i].substr(0, prefix.length) === prefix) &&
+				(lines[i].substr(lines[i].length - suffix.length) === suffix))
+			{
+				res.push(lines[i].substring(prefix.length, lines[i].length - suffix.length));
+				continue;
+			}
+			
+			res.push(lines[i]);
+		}
+		else
+		{
+			var trimed = this.trim(lines[i]);
+			prefix = this.ltrim(prefix);
+			suffix = this.rtrim(suffix);
+			
+			// ignore empty lines & lines without prefix or suffix
+			if(trimed == '' || (trimed.substring(0, prefix.length) !== prefix || trimed.substring(trimed.length - suffix.length) !== suffix))
+			{
+				res.push(lines[i]);
+				continue;
+			}
+			
+			var trimedLen = trimed.length;
+			var firstCharPos = lines[i].indexOf(trimed[0]);
+			trimed = trimed.substring(prefix.length, trimed.length - suffix.length);
+			trimed = lines[i].substring(0, firstCharPos) + trimed;
+			trimedLen += firstCharPos;
+			trimed += lines[i].substring(trimedLen);
+			
+			res.push(trimed);
+		}
+	}
+	
+	first = textarea.value.substring(end + 1);
+	
+	if(first != '')
+	{
+		res.push(first);
+	}
+	
+	textarea.value = res.join("\n");
+};
+
+
 Cz.Selection.getStartPos = function (textarea) {
 	return textarea.selectionStart;
 };
@@ -174,3 +241,12 @@ Cz.Selection.trim = function (str) {
 	return str.replace(/^\s+|\s+$/g,'');
 };
 
+
+Cz.Selection.ltrim = function (str) {
+	return str.replace(/^\s+/g,'');
+};
+
+
+Cz.Selection.rtrim = function (str) {
+	return str.replace(/\s+$/g,'');
+};
