@@ -57,9 +57,9 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 	
 	textarea.value = textarea.value.substring(0, start) +
 		prefix +
-		textarea.value.substring(start, end)
-		+ suffix
-		+ textarea.value.substring(end);
+		textarea.value.substring(start, end) +
+		suffix +
+		textarea.value.substring(end);
 	
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
@@ -90,7 +90,7 @@ Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 	}
 	
 	// normalize end
-	var io = value.substring(end - suffix.length, end + suffix.length).indexOf(suffix);
+	io = value.substring(end - suffix.length, end + suffix.length).indexOf(suffix);
 	if(io >= 0)
 	{
 		end -= (suffix.length - io);
@@ -131,7 +131,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	var start = this.getStartLinePos(textarea);
 	var end = this.getEndLinePos(textarea);
 	var lines = this.getLines(textarea);
-	var res = new Array();
+	var res = [];
 	var first = textarea.value.substring(0, start - 1);
 	
 	if(first != '')
@@ -197,7 +197,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	var start = this.getStartLinePos(textarea);
 	var end = this.getEndLinePos(textarea);
 	var lines = this.getLines(textarea);
-	var res = new Array();
+	var res = [];
 	var first = textarea.value.substring(0, start - 1);
 	
 	if(first != '')
