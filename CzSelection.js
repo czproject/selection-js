@@ -7,11 +7,21 @@
 var Cz = Cz || {};
 Cz.Selection = Cz.Selection || {};
 
+/**
+ * Gets selected text.
+ * @param	TextArea
+ * @return	String
+ */
 Cz.Selection.getText = function (textarea) {
 	return textarea.value.substring(this.getStartPos(textarea), this.getEndPos(textarea));
 };
 
 
+/**
+ * Gets selected lines.
+ * @param	TextArea
+ * @return	String[]
+ */
 Cz.Selection.getLines = function (textarea) {
 	var startPos = this.getStartLinePos(textarea);
 	var endPos = this.getEndLinePos(textarea);
@@ -20,6 +30,13 @@ Cz.Selection.getLines = function (textarea) {
 };
 
 
+/**
+ * Inserts text at position.
+ * @param	TextArea
+ * @param	int
+ * @param	String
+ * @return	void
+ */
 Cz.Selection.insert = function (textarea, pos, text) {
 	textarea.value = textarea.value.substring(0, pos) +
 		text +
@@ -27,6 +44,13 @@ Cz.Selection.insert = function (textarea, pos, text) {
 };
 
 
+/**
+ * Wraps selected text.
+ * @param	TextArea
+ * @param	String  prefix
+ * @param	String	suffix
+ * @return	void
+ */
 Cz.Selection.wrap = function (textarea, prefix, suffix) {
 	var start = this.getStartPos(textarea);
 	var end = this.getEndPos(textarea);
@@ -41,6 +65,13 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 };
 
 
+/**
+ * Unwraps selected text.
+ * @param	TextArea
+ * @param	String  prefix
+ * @param	String	suffix
+ * @return	void
+ */
 Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 	var start = this.getStartPos(textarea);
 	var end = this.getEndPos(textarea);
@@ -80,6 +111,14 @@ Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 };
 
 
+/**
+ * Wraps selected lines.
+ * @param	TextArea
+ * @param	String  prefix
+ * @param	String	suffix
+ * @param	bool	(optional) FALSE
+ * @return	void
+ */
 Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	if(typeof ignoreSpaces === "undefined")
 	{
@@ -139,6 +178,14 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 };
 
 
+/**
+ * Unwraps selected lines.
+ * @param	TextArea
+ * @param	String  prefix
+ * @param	String	suffix
+ * @param	bool	(optional) FALSE
+ * @return	void
+ */
 Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	if(typeof ignoreSpaces === "undefined")
 	{
@@ -206,32 +253,67 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 };
 
 
+/**
+ * Gets start position of selected text.
+ * @param	TextArea
+ * @return	int
+ * @internal
+ */
 Cz.Selection.getStartPos = function (textarea) {
 	return textarea.selectionStart;
 };
 
 
+/**
+ * Gets end position of selected text.
+ * @param	TextArea
+ * @return	int
+ * @internal
+ */
 Cz.Selection.getEndPos = function (textarea) {
 	return textarea.selectionEnd;
 };
 
 
+/**
+ * Gets length of selected text.
+ * @param	TextArea
+ * @return	int
+ */
 Cz.Selection.getLength = function (textarea) {
 	return this.getEndPos(textarea) - this.getStartPos(textarea);
 };
 
 
+/**
+ * Gets start position of selected lines.
+ * @param	TextArea
+ * @return	int
+ * @internal
+ */
 Cz.Selection.getStartLinePos = function (textarea) {
 	return textarea.value.substring(0, this.getStartPos(textarea)).lastIndexOf("\n") + 1;
 };
 
 
+/**
+ * Gets end position of selected lines.
+ * @param	TextArea
+ * @return	int
+ * @internal
+ */
 Cz.Selection.getEndLinePos = function (textarea) {
 	var selEndPos = this.getEndPos(textarea);
 	return selEndPos + textarea.value.substring(selEndPos).indexOf("\n");
 };
 
 
+/**
+ * Trims string.
+ * @param	String
+ * @return	String  trimed string
+ * @internal
+ */
 Cz.Selection.trim = function (str) {
 	if(String.prototype.trim)
 	{
@@ -242,11 +324,24 @@ Cz.Selection.trim = function (str) {
 };
 
 
+/**
+ * Trims string on left.
+ * @param	String
+ * @return	String  trimed string
+ * @internal
+ */
 Cz.Selection.ltrim = function (str) {
 	return str.replace(/^\s+/g,'');
 };
 
 
+/**
+ * Trims string on right.
+ * @param	String
+ * @return	String  trimed string
+ * @internal
+ */
 Cz.Selection.rtrim = function (str) {
 	return str.replace(/\s+$/g,'');
 };
+
