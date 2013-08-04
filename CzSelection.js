@@ -17,6 +17,7 @@ Cz.Selection.getText = function (textarea) {
 };
 
 
+
 /**
  * Gets selected lines.
  * @param	TextArea
@@ -28,6 +29,7 @@ Cz.Selection.getLines = function (textarea) {
 	
 	return textarea.value.substring(startPos, endPos).replace("\r", '').split("\n");
 };
+
 
 
 /**
@@ -42,6 +44,7 @@ Cz.Selection.insert = function (textarea, pos, text) {
 		text +
 		textarea.value.substring(pos);
 };
+
 
 
 /**
@@ -63,6 +66,7 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 	
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
+
 
 
 /**
@@ -109,6 +113,7 @@ Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 		second.substring(suffixPos + suffix.length);
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
+
 
 
 /**
@@ -176,6 +181,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	textarea.value = res.join("\n");
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
+
 
 
 /**
@@ -253,6 +259,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 };
 
 
+
 /**
  * Gets start position of selected text.
  * @param	TextArea
@@ -262,6 +269,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 Cz.Selection.getStartPos = function (textarea) {
 	return textarea.selectionStart;
 };
+
 
 
 /**
@@ -275,6 +283,7 @@ Cz.Selection.getEndPos = function (textarea) {
 };
 
 
+
 /**
  * Gets length of selected text.
  * @param	TextArea
@@ -283,6 +292,7 @@ Cz.Selection.getEndPos = function (textarea) {
 Cz.Selection.getLength = function (textarea) {
 	return this.getEndPos(textarea) - this.getStartPos(textarea);
 };
+
 
 
 /**
@@ -296,6 +306,7 @@ Cz.Selection.getStartLinePos = function (textarea) {
 };
 
 
+
 /**
  * Gets end position of selected lines.
  * @param	TextArea
@@ -306,6 +317,7 @@ Cz.Selection.getEndLinePos = function (textarea) {
 	var selEndPos = this.getEndPos(textarea);
 	return selEndPos + textarea.value.substring(selEndPos).indexOf("\n");
 };
+
 
 
 /**
@@ -324,6 +336,7 @@ Cz.Selection.trim = function (str) {
 };
 
 
+
 /**
  * Trims string on left.
  * @param	String
@@ -333,6 +346,7 @@ Cz.Selection.trim = function (str) {
 Cz.Selection.ltrim = function (str) {
 	return str.replace(/^\s+/g,'');
 };
+
 
 
 /**
