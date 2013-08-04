@@ -33,13 +33,19 @@ Cz.Selection.getLines = function (textarea) {
 
 
 /**
- * Inserts text at position.
+ * Inserts text at (end) position.
  * @param	TextArea
  * @param	int
  * @param	String
  * @return	void
  */
-Cz.Selection.insert = function (textarea, pos, text) {
+Cz.Selection.insert = function (textarea, text, pos) {
+	
+	if(typeof pos === "undefined")
+	{
+		pos = Cz.Selection.getEndPos(textarea);
+	}
+	
 	textarea.value = textarea.value.substring(0, pos) +
 		text +
 		textarea.value.substring(pos);
