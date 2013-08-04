@@ -48,6 +48,30 @@ Cz.Selection.insert = function (textarea, pos, text) {
 
 
 /**
+ * Replaces selected text.
+ * @param	TextArea
+ * @param	String
+ */
+Cz.Selection.replace = function (textarea, text, replaceAlways) {
+	if(typeof replaceAlways === "undefined")
+	{
+		replaceAlways = false;
+	}
+	
+	var start = Cz.Selection.getStartPos(textarea);
+	var end = Cz.Selection.getEndPos(textarea);
+	
+	if(start !== end || replaceAlways)
+	{
+		textarea.value = textarea.value.substring(0, start) +
+			text +
+			textarea.value.substring(end);
+	}
+};
+
+
+
+/**
  * Wraps selected text.
  * @param	TextArea
  * @param	String  prefix
