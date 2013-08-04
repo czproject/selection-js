@@ -9,7 +9,7 @@
 		body {
 			font-family: Arial, sans-serif;
 			line-height: 1.6em;
-			background: #f8f8f8;
+			background: #fbfbfb;
 		}
 		
 		#wrapper {
@@ -142,6 +142,11 @@ vulputate nec, fermentum fringilla, vehicula vitae, justo.
 <!--			<button id="btn-insert" title="Insert text at a position.">insert()</button>-->
 		</div>
 		
+		<div class="toolbar">
+			<button id="btn-replace" title="Replace selected text">replace()</button>
+			<button id="btn-replace-always" title="Replace selected text / place text in cursor position">replace() always</button>
+		</div>
+		
 <!--		<h2 id="docs">Docs</h2>-->
 <!--		<h3>Step 1</h3>-->
 <!--		<pre>&lt;script src="CzSelection.js">&lt;/script></pre>-->
@@ -195,6 +200,14 @@ vulputate nec, fermentum fringilla, vehicula vitae, justo.
 		<h3 id="api-unwrap-lines">Cz.Selection.unwrapLines(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>, <code>ignoreSpaces = FALSE</code>)</h3>
 		<p>
 			<span class="description">Unwraps selected lines.</span>
+			Returns <code>void</code>.
+		</p>
+		
+		<hr>
+		
+		<h3 id="api-replace">Cz.Selection.replace(<code>textarea</code>, <code>text</code>, <code>replaceAlways = FALSE</code>)</h3>
+		<p>
+			<span class="description">Replace selected text.</span>
 			Returns <code>void</code>.
 		</p>
 		
@@ -289,6 +302,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 		Jasno.addEvent(document.getElementById('btn-unwrap-lines'), 'click', function() {
 			var text = window.prompt('Insert a text', ' :) ');
 			Cz.Selection.unwrapLines(textarea, text, '!!!');
+			textarea.focus();
+		});
+		
+		// Replace
+		Jasno.addEvent(document.getElementById('btn-replace'), 'click', function() {
+			var text = window.prompt('Insert a text', ' Lorem ipsum ');
+			Cz.Selection.replace(textarea, text);
+			textarea.focus();
+		});
+		
+		
+		// Replace always
+		Jasno.addEvent(document.getElementById('btn-replace-always'), 'click', function() {
+			var text = window.prompt('Insert a text', ' Lorem ipsum ');
+			Cz.Selection.replace(textarea, text, true);
 			textarea.focus();
 		});
 	</script>
