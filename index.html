@@ -139,10 +139,10 @@ vulputate nec, fermentum fringilla, vehicula vitae, justo.
 			<button id="btn-unwrap" title="Unwrap selected text.">unwrap()</button>
 			<button id="btn-wrap-lines" title="Wrap selected lines.">wrapLines()</button>
 			<button id="btn-unwrap-lines" title="Unwrap selected lines.">unwrapLines()</button>
-<!--			<button id="btn-insert" title="Insert text at a position.">insert()</button>-->
 		</div>
 		
 		<div class="toolbar">
+			<button id="btn-insert" title="Insert text at a position.">insert()</button>
 			<button id="btn-replace" title="Replace selected text">replace()</button>
 			<button id="btn-replace-always" title="Replace selected text / place text in cursor position">replace() always</button>
 		</div>
@@ -248,67 +248,69 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 	</div>
 	
 	<script src="CzSelection.js"></script>
+	<script src="CzTextareaSelection.js"></script>
 	<script src="jasno.js"></script> <!-- JavaScript Framework (for event binding) -->
 	<script type="text/javascript">
 		var textarea = document.getElementById('myarea');
+		var selection = new Cz.TextareaSelection(textarea);
 		
 		// Get Text
 		Jasno.addEvent(document.getElementById('btn-get-text'), 'click', function() {
-			alert(Cz.Selection.getText(textarea));
+			alert(selection.getText());
 			textarea.focus();
 		});
 		
 		// Get Lines
 		Jasno.addEvent(document.getElementById('btn-get-lines'), 'click', function() {
-			alert(Cz.Selection.getLines(textarea).join("\n-----\n"));
+			alert(selection.getLines().join("\n-----\n"));
 			textarea.focus();
 		});
 		
 		// Get Length
 		Jasno.addEvent(document.getElementById('btn-get-length'), 'click', function() {
-			alert(Cz.Selection.getLength(textarea));
+			alert(selection.getLength());
 			textarea.focus();
 		});
 		
 		// Insert
-		//Jasno.addEvent(document.getElementById('btn-insert'), 'click', function() {
-		//	var text = window.prompt('Insert a text', ' :) ');
-		//	Cz.Selection.insert(textarea, 10, text);
-		//	textarea.focus();
-		//});
+		Jasno.addEvent(document.getElementById('btn-insert'), 'click', function() {
+			var text = window.prompt('Insert a text', ' :) ');
+			Cz.Selection.insert(textarea, text);
+			textarea.focus();
+		});
 		
 		// Wrap
 		Jasno.addEvent(document.getElementById('btn-wrap'), 'click', function() {
 			var text = window.prompt('Insert a text', ' :) ');
-			Cz.Selection.wrap(textarea, text, '!!! ');
+			selection.wrap(text, '!!! ');
 			textarea.focus();
 		});
 		
 		// Unwrap
 		Jasno.addEvent(document.getElementById('btn-unwrap'), 'click', function() {
 			var text = window.prompt('Insert a text', ' :) ');
-			Cz.Selection.unwrap(textarea, text, '!!! ');
+			selection.unwrap(text, '!!! ');
 			textarea.focus();
 		});
 		
 		// Wrap Lines
 		Jasno.addEvent(document.getElementById('btn-wrap-lines'), 'click', function() {
 			var text = window.prompt('Insert a text', ' :) ');
-			Cz.Selection.wrapLines(textarea, text, '!!!');
+			selection.wrapLines(text, '!!!');
 			textarea.focus();
 		});
 		
 		// Unwrap Lines
 		Jasno.addEvent(document.getElementById('btn-unwrap-lines'), 'click', function() {
 			var text = window.prompt('Insert a text', ' :) ');
-			Cz.Selection.unwrapLines(textarea, text, '!!!');
+			selection.unwrapLines(text, '!!!');
 			textarea.focus();
 		});
 		
 		// Replace
 		Jasno.addEvent(document.getElementById('btn-replace'), 'click', function() {
 			var text = window.prompt('Insert a text', ' Lorem ipsum ');
-			Cz.Selection.replace(textarea, text);
+			selection.replace(text);
 			textarea.focus();
 		});
 		
@@ -316,7 +318,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 		// Replace always
 		Jasno.addEvent(document.getElementById('btn-replace-always'), 'click', function() {
 			var text = window.prompt('Insert a text', ' Lorem ipsum ');
-			Cz.Selection.replace(textarea, text, true);
+			selection.replace(text, true);
 			textarea.focus();
 		});
 	</script>
