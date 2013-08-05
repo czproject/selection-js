@@ -315,6 +315,22 @@ Cz.Selection.getEndPos = function (textarea) {
 
 
 /**
+ * Selects text in textarea.
+ * @param	TextArea
+ * @param	int
+ * @param	int
+ */
+Cz.Selection.setPosition = function (textarea, start, end)
+{
+	//textarea.focus();
+	textarea.selectionStart = start;
+	textarea.selectionEnd = end;
+	//textarea.focus();
+}
+
+
+
+/**
  * Gets length of selected text.
  * @param	TextArea
  * @return	int
