@@ -95,6 +95,7 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 		textarea.value.substring(end);
 	
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
+	this.setPosition(textarea, start + prefix.length, end + prefix.length);
 };
 
 
