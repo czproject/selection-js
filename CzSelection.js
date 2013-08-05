@@ -37,10 +37,10 @@ Cz.Selection.getLines = function (textarea) {
  * @param	TextArea
  * @param	String
  * @param	int
+ * @param	bool
  * @return	void
  */
-Cz.Selection.insert = function (textarea, text, pos) {
-	
+Cz.Selection.insert = function (textarea, text, pos, selectInsertedText) {
 	if(typeof pos === "undefined")
 	{
 		pos = Cz.Selection.getEndPos(textarea);
@@ -49,6 +49,16 @@ Cz.Selection.insert = function (textarea, text, pos) {
 	textarea.value = textarea.value.substring(0, pos) +
 		text +
 		textarea.value.substring(pos);
+	
+	if(typeof selectInsertedText === "undefined")
+	{
+		selectInsertedText = false;
+	}
+	
+	if(selectInsertedText)
+	{
+		this.setPosition(textarea, pos, pos + text.length);
+	}
 };
 
 
