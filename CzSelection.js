@@ -335,8 +335,8 @@ Cz.Selection.getEndPos = function (textarea) {
 Cz.Selection.setPosition = function (textarea, start, end)
 {
 	//textarea.focus();
-	textarea.selectionStart = start;
-	textarea.selectionEnd = end;
+	textarea.selectionStart = Math.min(start, end);
+	textarea.selectionEnd = Math.max(start, end);
 	//textarea.focus();
 }
 
