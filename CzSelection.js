@@ -35,8 +35,8 @@ Cz.Selection.getLines = function (textarea) {
 /**
  * Inserts text at (end) position.
  * @param	TextArea
- * @param	int
  * @param	String
+ * @param	int
  * @return	void
  */
 Cz.Selection.insert = function (textarea, text, pos) {
