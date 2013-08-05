@@ -275,7 +275,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 		// Insert
 		Jasno.addEvent(document.getElementById('btn-insert'), 'click', function() {
 			var text = window.prompt('Insert a text', ' :) ');
-			Cz.Selection.insert(textarea, text);
+			Cz.Selection.insert(textarea, text, undefined, true);
 			textarea.focus();
 		});
 		
