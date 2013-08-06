@@ -331,6 +331,7 @@ Cz.Selection.getEndPos = function (textarea) {
  * @param	TextArea
  * @param	int
  * @param	int
+ * @internal
  */
 Cz.Selection.setPosition = function (textarea, start, end)
 {
