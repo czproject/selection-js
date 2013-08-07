@@ -41,9 +41,12 @@ Cz.Selection.getLines = function (textarea) {
  * @return	void
  */
 Cz.Selection.insert = function (textarea, text, pos, selectInsertedText) {
+	var start = this.getStartPos(textarea);
+	var end = this.getEndPos(textarea);
+	
 	if(typeof pos === "undefined")
 	{
-		pos = Cz.Selection.getEndPos(textarea);
+		pos = end;
 	}
 	
 	textarea.value = textarea.value.substring(0, pos) +
@@ -58,6 +61,21 @@ Cz.Selection.insert = function (textarea, text, pos, selectInsertedText) {
 	if(selectInsertedText)
 	{
 		this.setPosition(textarea, pos, pos + text.length);
+	}
+	else // return selection
+	{
+		if(pos >= end)
+		{
+			this.setPosition(textarea, start, end);
+		}
+		else if(pos <= start)
+		{
+			this.setPosition(textarea, start + text.length, end + text.length);
+		}
+		else
+		{
+			this.setPosition(textarea, start, end + text.length);
+		}
 	}
 };
 
@@ -231,6 +249,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	
 	var start = this.getStartLinePos(textarea);
 	var end = this.getEndLinePos(textarea);
+	var prefixSuffixLen = 0; // for selection
 	var lines = this.getLines(textarea);
 	var res = [];
 	var first = textarea.value.substring(0, start - 1);
@@ -245,6 +264,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 		if(!ignoreSpaces)
 		{
 			res.push(prefix + lines[i] + suffix);
+			prefixSuffixLen += prefix.length + suffix.length;
 		}
 		else
 		{
@@ -264,6 +284,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 			trimed += lines[i].substring(trimedLen);
 			
 			res.push(trimed);
+			prefixSuffixLen += prefix.length + suffix.length;
 		}
 	}
 	
@@ -275,6 +296,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	}
 	
 	textarea.value = res.join("\n");
+	this.setPosition(textarea, start, end + prefixSuffixLen)
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
 
@@ -298,6 +320,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	
 	var start = this.getStartLinePos(textarea);
 	var end = this.getEndLinePos(textarea);
+	var prefixSuffixLen = 0; // for selection
 	var lines = this.getLines(textarea);
 	var res = [];
 	var first = textarea.value.substring(0, start - 1);
@@ -315,9 +338,11 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 				(lines[i].substr(lines[i].length - suffix.length) === suffix))
 			{
 				res.push(lines[i].substring(prefix.length, lines[i].length - suffix.length));
+				prefixSuffixLen += prefix.length + suffix.length;
 				continue;
 			}
 			
+			// prefix || suffix not found
 			res.push(lines[i]);
 		}
 		else
@@ -340,6 +365,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 			trimedLen += firstCharPos;
 			trimed += lines[i].substring(trimedLen);
 			
+			prefixSuffixLen += prefix.length + suffix.length;
 			res.push(trimed);
 		}
 	}
@@ -352,6 +378,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	}
 	
 	textarea.value = res.join("\n");
+	this.setPosition(textarea, start, end - prefixSuffixLen)
 };
 
 
