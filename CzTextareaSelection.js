@@ -13,8 +13,8 @@ var Cz;
 			return Cz.Selection.getLines(this.textarea);
 		};
 
-		TextAreaSelection.prototype.insert = function (text, pos) {
-			return Cz.Selection.insert(this.textarea, text, pos);
+		TextAreaSelection.prototype.insert = function (text, pos, selectInsertedText) {
+			return Cz.Selection.insert(this.textarea, text, pos, selectInsertedText);
 		};
 
 		TextAreaSelection.prototype.replace = function (text, alwaysReplace, selectReplacedText) {
