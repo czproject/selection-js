@@ -95,7 +95,7 @@ Cz.Selection.replace = function (textarea, text, replaceAlways) {
  * @param	String	suffix
  * @return	void
  */
-Cz.Selection.wrap = function (textarea, prefix, suffix) {
+Cz.Selection.wrap = function (textarea, prefix, suffix, selectAll) {
 	var start = this.getStartPos(textarea);
 	var end = this.getEndPos(textarea);
 	
@@ -106,7 +106,19 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 		textarea.value.substring(end);
 	
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
-	this.setPosition(textarea, start + prefix.length, end + prefix.length);
+	if(typeof selectAll === 'undefined')
+	{
+		selectAll = false;
+	}
+	
+	if(selectAll)
+	{
+		this.setPosition(textarea, start, end + prefix.length + suffix.length);
+	}
+	else
+	{
+		this.setPosition(textarea, start + prefix.length, end + prefix.length);
+	}
 };
 
 
