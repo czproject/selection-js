@@ -121,39 +121,66 @@ Cz.Selection.wrap = function (textarea, prefix, suffix) {
 Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 	var start = this.getStartPos(textarea);
 	var end = this.getEndPos(textarea);
+	var oldStart = start;
+	var oldEnd = end;
 	var value = textarea.value;
 	
-	// normalize start
-	var io = value.substring(start - prefix.length, start + prefix.length).indexOf(prefix);
-	if(io >= 0)
+	var med = start + Math.ceil((end - start) / 2);
+	var io;
+	
+	// find prefix
+	io = value.substring(0, med).lastIndexOf(prefix);
+	if(io < 0)
 	{
-		if((start - prefix.length) < 0)
-		{
-			start += (start - prefix.length) * -1;
-		}
-		
-		start += io;
+		return;
 	}
 	
-	// normalize end
-	io = value.substring(end - suffix.length, end + suffix.length).indexOf(suffix);
-	if(io >= 0)
+	start = io;
+	
+	
+	// find suffix
+	io = value.substring(med).indexOf(suffix);
+	if(io < 0) // no found
 	{
-		end -= (suffix.length - io);
+		return;
 	}
 	
-	var first = textarea.value.substring(0, start);
-	var second = textarea.value.substring(end);
+	end = med + io;
 	
-	var prefixPos = first.lastIndexOf(prefix);
-	var suffixPos = second.indexOf(suffix);
+	textarea.value = value.substring(0, start) +
+		value.substring(start + prefix.length, end) +
+		value.substring(end + suffix.length);
 	
-	textarea.value = first.substring(0, prefixPos) +
-		first.substring(prefixPos + prefix.length) +
-		textarea.value.substring(start, end) +
-		second.substring(0, suffixPos) +
-		second.substring(suffixPos + suffix.length);
-	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
+	// oldStart < start (prefixPos) => do nothing
+	// oldEnd < end (suffixPos) => oldEnd - prefix.length
+	// oldStart in prefixPos => oldStart = start(prefixPos);
+	// oldEnd in suffixPos => oldEnd = end(suffixPos) - prefix.length
+	// oldStart after prefix => oldStart - prefix.length
+	// oldEnd after suffix => oldEnd - prefix.length - suffix.length
+	
+	if(oldStart > start && oldStart < (start + prefix.length))
+	{
+		oldStart = start;
+	}
+	else if(oldStart >= (start + prefix.length))
+	{
+		oldStart -= prefix.length;
+	}
+	
+	if(oldEnd <= end)
+	{
+		oldEnd -= prefix.length;
+	}
+	else if(oldEnd > end && oldEnd < (end + suffix.length))
+	{
+		oldEnd = end - prefix.length;
+	}
+	else
+	{
+		oldEnd -= prefix.length + suffix.length;
+	}
+	
+	this.setPosition(textarea, oldStart, oldEnd);
 };
 
 
