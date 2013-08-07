@@ -87,6 +87,7 @@ Cz.Selection.insert = function (textarea, text, pos, selectInsertedText) {
  * @param	String
  * @param	bool
  * @param	bool
+ * @return	void
  */
 Cz.Selection.replace = function (textarea, text, replaceAlways, selectReplacedText) {
 	if(typeof replaceAlways === "undefined")
