@@ -37,14 +37,6 @@ var Cz;
 			Cz.Selection.unwrapLines(this.textarea, prefix, suffix, ignoreSpaces);
 		};
 
-		TextAreaSelection.prototype.getStartPos = function () {
-			return Cz.Selection.getStartPos(this.textarea);
-		};
-
-		TextAreaSelection.prototype.getEndPos = function () {
-			return Cz.Selection.getEndPos(this.textarea);
-		};
-
 		TextAreaSelection.prototype.getLength = function () {
 			return Cz.Selection.getLength(this.textarea);
 		};
