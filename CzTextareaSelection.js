@@ -42,7 +42,7 @@ var Cz;
 		};
 		
 		TextAreaSelection.prototype.focus = function () {
-			return this.textarea.focus();
+			this.textarea.focus();
 		};
 		
 		return TextAreaSelection;
