@@ -1,0 +1,33 @@
+Cz.Selection
+############
+
+string    getText(textarea)
+string[]  getLines(textarea)
+int       getLength(textarea)
+
+void      insert(textarea, text, [position, [selectInsertedText=FALSE]])
+void      replace(textarea, text, [replaceAlways=FALSE, [selectReplacedText=TRUE]])
+void      wrap(textarea, prefix, suffix, [selectAll=FALSE])
+void      unwrap(textarea, prefix, suffix)
+void      wrapLines(textarea, prefix, suffix, [ignoreSpaces=FALSE])
+void      unwrapLines(textarea, prefix, suffix, [ignoreSpaces=FALSE])
+
+
+Cz.TextAreaSelection
+####################
+
+__constructor(textarea)
+string    getText()
+string[]  getLines()
+int       getLength()
+
+void      insert(text, [position, [selectInsertedText=FALSE]])
+void      replace(text, [replaceAlways=FALSE, [selectReplacedText=TRUE]])
+void      wrap(prefix, suffix, [selectAll=FALSE])
+void      unwrap(prefix, suffix)
+void      wrapLines(prefix, suffix, [ignoreSpaces=FALSE])
+void      unwrapLines(prefix, suffix, [ignoreSpaces=FALSE])
+
+void      focus()
+
+
