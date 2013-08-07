@@ -104,6 +104,32 @@
 			display: block;
 			border: none;
 		}
+		
+		pre {
+			padding: 1em;
+			background-color: #f0f7ff;
+			border: 1px solid #9fc8f1;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0px 0px 4px 0px #9fc8f1;
+			box-shadow: inset 0px 0px 4px 0px #9fc8f1;
+		}
+		
+		.h-keyword {
+			font-weight: bold;
+			color: maroon;
+		}
+		
+		.h-string {
+			color: green;
+		}
+		
+		.h-object {
+			color: navy;
+		}
+		
+		.h-var {
+			color: #75b;
+		}
 	</style>
 	
 	<title>CzSelection - JS library</title>
@@ -184,7 +210,7 @@ vulputate nec, fermentum fringilla, vehicula vitae, justo.
 		
 		<hr>
 		
-		<h3 id="api-wrap">Cz.Selection.wrap(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>)</h3>
+		<h3 id="api-wrap">Cz.Selection.wrap(<code>textarea</code>, <code>prefix</code>, <code>suffix</code>, <code>selectAll = FALSE</code>)</h3>
 		<p>
 			<span class="description">Wraps selected text.</span>
 			Returns <code>void</code>.
@@ -210,11 +236,35 @@ vulputate nec, fermentum fringilla, vehicula vitae, justo.
 		
 		<hr>
 		
-		<h3 id="api-replace">Cz.Selection.replace(<code>textarea</code>, <code>text</code>, <code>replaceAlways = FALSE</code>)</h3>
+		<h3 id="api-replace">Cz.Selection.replace(<code>textarea</code>, <code>text</code>, <code>replaceAlways = FALSE</code>, <code>selectReplacedText = TRUE</code>)</h3>
 		<p>
 			<span class="description">Replace selected text.</span>
 			Returns <code>void</code>.
 		</p>
+		
+		<h3 id="api-insert">Cz.Selection.insert(<code>textarea</code>, <code>text</code>, <code>position = undefined</code>, <code>selectInsertedText = FALSE</code>)</h3>
+		<p>
+			<span class="description">Insert text at the <code>position</code> (or cursor positon/end current selection for <code>undefined</code> value).</span>
+			Returns <code>void</code>.
+		</p>
+		
+		<h2 id="textareaselection">TextAreaSelection</h2>
+<pre><code><span class="h-keyword">var</span> <span class="h-var">myTextArea</span> = <span class="h-object">document</span>.getElementById(<span class="h-string">'my-textarea'</span>);
+<span class="h-keyword">var</span> <span class="h-object">selection</span> = <span class="h-keyword">new</span> <span class="h-object">Cz</span>.<span class="h-object">TextAreaSelection</span>(<span class="h-var">myTextArea</span>);
+
+<span class="h-object">selection</span>.getText();
+<span class="h-object">selection</span>.getLines();
+<span class="h-object">selection</span>.getLength();
+
+<span class="h-object">selection</span>.wrap(<span class="h-var">prefix</span>, <span class="h-var">suffix</span>, <span class="h-var">selectAll</span>);
+<span class="h-object">selection</span>.unwrap(<span class="h-var">prefix</span>, <span class="h-var">suffix</span>);
+<span class="h-object">selection</span>.wrapLines(<span class="h-var">prefix</span>, <span class="h-var">suffix</span>, <span class="h-var">ignoreSpaces</span>);
+<span class="h-object">selection</span>.unwrapLines(<span class="h-var">prefix</span>, <span class="h-var">suffix</span>, <span class="h-var">ignoreSpaces</span>);
+
+<span class="h-object">selection</span>.replace(<span class="h-var">text</span>, <span class="h-var">replaceAlways</span>, <span class="h-var">selectReplacedText</span>);
+<span class="h-object">selection</span>.insert(<span class="h-var">text</span>, <span class="h-var">position</span>, <span class="h-var">selectInsertedText</span>);
+<span class="h-object">selection</span>.focus();
+</code></pre>
 		
 		<h2 id="source">Source</h2>
 		<p>See repository <a href="http://github.com/czproject/selection-js/">czproject/selection-js</a> on server <a href="http://github.com/">GitHub.com</a>.</p>
@@ -253,11 +303,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 	</div>
 	
 	<script src="CzSelection.js"></script>
-	<script src="CzTextareaSelection.js"></script>
+	<script src="CzTextAreaSelection.js"></script>
 	<script src="jasno.js"></script> <!-- JavaScript Framework (for event binding) -->
 	<script type="text/javascript">
 		var textarea = document.getElementById('myarea');
-		var selection = new Cz.TextareaSelection(textarea);
+		var selection = new Cz.TextAreaSelection(textarea);
 		
 		// Get Text
 		Jasno.addEvent(document.getElementById('btn-get-text'), 'click', function() {
