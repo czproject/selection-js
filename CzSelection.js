@@ -68,8 +68,9 @@ Cz.Selection.insert = function (textarea, text, pos, selectInsertedText) {
  * @param	TextArea
  * @param	String
  * @param	bool
+ * @param	bool
  */
-Cz.Selection.replace = function (textarea, text, replaceAlways) {
+Cz.Selection.replace = function (textarea, text, replaceAlways, selectReplacedText) {
 	if(typeof replaceAlways === "undefined")
 	{
 		replaceAlways = false;
@@ -83,6 +84,20 @@ Cz.Selection.replace = function (textarea, text, replaceAlways) {
 		textarea.value = textarea.value.substring(0, start) +
 			text +
 			textarea.value.substring(end);
+		
+		if(typeof selectReplacedText === 'undefined')
+		{
+			selectReplacedText = true;
+		}
+	
+		if(selectReplacedText)
+		{
+			this.setPosition(textarea, start, start + text.length);
+		}
+		else // set cursor on end position
+		{
+			this.setPosition(textarea, start + text.length, start + text.length);
+		}
 	}
 };
 
