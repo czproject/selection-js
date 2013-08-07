@@ -391,7 +391,23 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
  * @internal
  */
 Cz.Selection.getStartPos = function (textarea) {
-	return textarea.selectionStart;
+	if('selectionStart' in textarea)
+	{
+		return textarea.selectionStart;
+	}
+	
+	// Internet Explorer before version 9
+	// http://the-stickman.com/web-development/javascript/finding-selection-cursor-position-in-a-textarea-in-internet-explorer/
+	// The current selection
+	var range = document.selection.createRange();
+	// We'll use this as a 'dummy'
+	var stored_range = range.duplicate();
+	// Select all text
+	stored_range.moveToElementText(textarea);
+	// Now move 'dummy' end point to end point of original range
+	stored_range.setEndPoint('EndToEnd', range);
+	// Now we can calculate start and end points
+	return stored_range.text.length - range.text.length;
 };
 
 
@@ -403,7 +419,24 @@ Cz.Selection.getStartPos = function (textarea) {
  * @internal
  */
 Cz.Selection.getEndPos = function (textarea) {
-	return textarea.selectionEnd;
+	if('selectionEnd' in textarea)
+	{
+		return textarea.selectionEnd;
+	}
+	
+	// Internet Explorer before version 9
+	// http://the-stickman.com/web-development/javascript/finding-selection-cursor-position-in-a-textarea-in-internet-explorer/
+	// The current selection
+	var range = document.selection.createRange();
+	// We'll use this as a 'dummy'
+	var stored_range = range.duplicate();
+	// Select all text
+	stored_range.moveToElementText(textarea);
+	// Now move 'dummy' end point to end point of original range
+	stored_range.setEndPoint('EndToEnd', range);
+	// Now we can calculate start and end points
+	//return (stored_range.text.length - range.text.length) + range.text.length;
+	return stored_range.text.length;
 };
 
 
@@ -417,10 +450,28 @@ Cz.Selection.getEndPos = function (textarea) {
  */
 Cz.Selection.setPosition = function (textarea, start, end)
 {
-	//textarea.focus();
-	textarea.selectionStart = Math.min(start, end);
-	textarea.selectionEnd = Math.max(start, end);
-	//textarea.focus();
+	start = Math.min(start, end);
+	end = Math.max(start, end);
+	
+	if('selectionStart' in textarea)
+	{
+		//textarea.focus();
+		textarea.selectionStart = start;
+		textarea.selectionEnd = end;
+		//textarea.focus();
+		return;
+	}
+	
+	// http://stackoverflow.com/questions/12194113/how-to-get-range-of-selected-text-of-textarea-in-javascript
+	// http://stackoverflow.com/questions/401593/understanding-what-goes-on-with-textarea-selection-with-javascript
+	var delta = textarea.value.substring(0, start).length - textarea.value.substring(0, start).replace(/\r\n/g, "\n").length;
+	
+	// http://stackoverflow.com/questions/1981088/set-textarea-selection-in-internet-explorer
+	range = textarea.createTextRange();
+	range.collapse(true);
+	range.moveStart('character', start - delta);
+	range.moveEnd('character', end - start);
+	range.select();
 }
 
 
