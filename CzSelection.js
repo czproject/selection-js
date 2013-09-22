@@ -297,7 +297,7 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	}
 	
 	textarea.value = res.join("\n");
-	this.setPosition(textarea, start, end + prefixSuffixLen)
+	this.setPosition(textarea, start, end + prefixSuffixLen);
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
 
@@ -379,7 +379,7 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	}
 	
 	textarea.value = res.join("\n");
-	this.setPosition(textarea, start, end - prefixSuffixLen)
+	this.setPosition(textarea, start, end - prefixSuffixLen);
 };
 
 
@@ -472,7 +472,7 @@ Cz.Selection.setPosition = function (textarea, start, end)
 	range.moveStart('character', start - delta);
 	range.moveEnd('character', end - start);
 	range.select();
-}
+};
 
 
 
