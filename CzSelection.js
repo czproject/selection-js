@@ -49,9 +49,10 @@ Cz.Selection.insert = function (textarea, text, pos, selectInsertedText) {
 		pos = end;
 	}
 
-	textarea.value = textarea.value.substring(0, pos) +
-		text +
-		textarea.value.substring(pos);
+	this.inputText(textarea, text, pos, pos);
+	// textarea.value = textarea.value.substring(0, pos) +
+	// 	text +
+	// 	textarea.value.substring(pos);
 
 	if(typeof selectInsertedText === "undefined")
 	{
@@ -100,9 +101,10 @@ Cz.Selection.replace = function (textarea, text, replaceAlways, selectReplacedTe
 
 	if(start !== end || replaceAlways)
 	{
-		textarea.value = textarea.value.substring(0, start) +
-			text +
-			textarea.value.substring(end);
+		this.inputText(textarea, text, start, end);
+		// textarea.value = textarea.value.substring(0, start) +
+		// 	text +
+		// 	textarea.value.substring(end);
 
 		if(typeof selectReplacedText === 'undefined')
 		{
@@ -133,11 +135,12 @@ Cz.Selection.wrap = function (textarea, prefix, suffix, selectAll) {
 	var start = this.getStartPos(textarea);
 	var end = this.getEndPos(textarea);
 
-	textarea.value = textarea.value.substring(0, start) +
-		prefix +
-		textarea.value.substring(start, end) +
-		suffix +
-		textarea.value.substring(end);
+	this.inputText(textarea, prefix + textarea.value.substring(start, end) + suffix, start, end);
+	// textarea.value = textarea.value.substring(0, start) +
+	// 	prefix +
+	// 	textarea.value.substring(start, end) +
+	// 	suffix +
+	// 	textarea.value.substring(end);
 
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 	if(typeof selectAll === 'undefined')
@@ -193,9 +196,10 @@ Cz.Selection.unwrap = function (textarea, prefix, suffix) {
 
 	end = med + io;
 
-	textarea.value = value.substring(0, start) +
-		value.substring(start + prefix.length, end) +
-		value.substring(end + suffix.length);
+	this.inputText(textarea, value.substring(start + prefix.length, end), start, end + suffix.length);
+	// textarea.value = value.substring(0, start) +
+	// 	value.substring(start + prefix.length, end) +
+	// 	value.substring(end + suffix.length);
 
 	// oldStart < start (prefixPos) => do nothing
 	// oldEnd < end (suffixPos) => oldEnd - prefix.length
@@ -437,6 +441,39 @@ Cz.Selection.getEndPos = function (textarea) {
 	// Now we can calculate start and end points
 	//return (stored_range.text.length - range.text.length) + range.text.length;
 	return stored_range.text.length;
+};
+
+
+
+/**
+ * Inputs text into textarea.
+ * @param	TextArea
+ * @param	int
+ * @param	int
+ * @internal
+ */
+Cz.Selection.inputText = function (textarea, text, start, end)
+{
+	var fallback = true;
+
+	if (document.createEvent) {
+		this.setPosition(textarea, start, end);
+		try {
+			var textInputEvent = document.createEvent('TextEvent');
+
+			if (textInputEvent.initTextEvent) { // Firefox - type error - method not found
+				fallback = false;
+				textInputEvent.initTextEvent('textInput', true, true, null, text);
+				textarea.dispatchEvent(textInputEvent); // fire the event on the the textarea
+			}
+		} catch (e) {} // Opera throws DOMException: NOT_SUPPORTED_ERR (on document.createEvent('TextEvent'))
+	}
+
+	if (fallback) {
+		textarea.value = textarea.value.substring(0, start) +
+			text +
+			textarea.value.substring(end);
+	}
 };
 
 
