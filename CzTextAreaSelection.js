@@ -40,11 +40,11 @@ var Cz;
 		TextAreaSelection.prototype.getLength = function () {
 			return Cz.Selection.getLength(this.textarea);
 		};
-		
+
 		TextAreaSelection.prototype.focus = function () {
 			this.textarea.focus();
 		};
-		
+
 		return TextAreaSelection;
 	})();
 	Cz.TextAreaSelection = TextAreaSelection;
