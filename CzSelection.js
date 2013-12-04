@@ -448,6 +448,7 @@ Cz.Selection.getEndPos = function (textarea) {
 /**
  * Inputs text into textarea.
  * @param	TextArea
+ * @param	string
  * @param	int
  * @param	int
  * @internal
