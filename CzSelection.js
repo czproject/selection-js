@@ -257,12 +257,12 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	var prefixSuffixLen = 0; // for selection
 	var lines = this.getLines(textarea);
 	var res = [];
-	var first = textarea.value.substring(0, start - 1);
+	// var first = textarea.value.substring(0, start - 1);
 
-	if(first != '')
-	{
-		res.push(first);
-	}
+	// if(first != '')
+	// {
+	// 	res.push(first);
+	// }
 
 	for(var i = 0; i < lines.length; i++)
 	{
@@ -293,14 +293,15 @@ Cz.Selection.wrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 		}
 	}
 
-	first = textarea.value.substring(end + 1);
+	// first = textarea.value.substring(end + 1);
 
-	if(first != '')
-	{
-		res.push(first);
-	}
+	// if(first != '')
+	// {
+	// 	res.push(first);
+	// }
 
-	textarea.value = res.join("\n");
+	this.inputText(textarea, res.join("\n"), start, end);
+	// textarea.value = res.join("\n");
 	this.setPosition(textarea, start, end + prefixSuffixLen);
 	// TODO: aby zustal vybran jen uzivatelem vybrany text a ne i prefix|suffix (nastaveni pozice kurzoru)
 };
@@ -328,12 +329,12 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 	var prefixSuffixLen = 0; // for selection
 	var lines = this.getLines(textarea);
 	var res = [];
-	var first = textarea.value.substring(0, start - 1);
+	// var first = textarea.value.substring(0, start - 1);
 
-	if(first != '')
-	{
-		res.push(first);
-	}
+	// if(first != '')
+	// {
+	// 	res.push(first);
+	// }
 
 	for(var i = 0; i < lines.length; i++)
 	{
@@ -375,14 +376,14 @@ Cz.Selection.unwrapLines = function (textarea, prefix, suffix, ignoreSpaces) {
 		}
 	}
 
-	first = textarea.value.substring(end + 1);
+	// first = textarea.value.substring(end + 1);
 
-	if(first != '')
-	{
-		res.push(first);
-	}
-
-	textarea.value = res.join("\n");
+	// if(first != '')
+	// {
+	// 	res.push(first);
+	// }
+	this.inputText(textarea, res.join("\n"), start, end);
+	// textarea.value = res.join("\n");
 	this.setPosition(textarea, start, end - prefixSuffixLen);
 };
 
