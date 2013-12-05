@@ -1,7 +1,8 @@
-/** Cz Selection Library
+/**
+ * Cz Selection Library
+ *
  * @author		Jan Pecha <janpecha@email.cz>, 2013
  * @license		New BSD License
- * @version		2013-02-25-12
  */
 
 var Cz = Cz || {};

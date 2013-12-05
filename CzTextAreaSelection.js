@@ -1,3 +1,9 @@
+/**
+ * Cz Selection Library
+ *
+ * @author		Jan Pecha <janpecha@email.cz>, 2013
+ * @license		New BSD License
+ */
 
 var Cz;
 (function (Cz) {
