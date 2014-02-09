@@ -27,6 +27,10 @@ var Cz;
 			return Cz.Selection.replace(this.textarea, text, alwaysReplace, selectReplacedText);
 		};
 
+		TextAreaSelection.prototype.replaceLines = function (text, alwaysReplace, selectReplacedText) {
+			return Cz.Selection.replaceLines(this.textarea, text, alwaysReplace, selectReplacedText);
+		};
+
 		TextAreaSelection.prototype.wrap = function (prefix, suffix, selectAll) {
 			Cz.Selection.wrap(this.textarea, prefix, suffix, selectAll);
 		};

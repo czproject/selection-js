@@ -126,6 +126,48 @@ Cz.Selection.replace = function (textarea, text, replaceAlways, selectReplacedTe
 
 
 /**
+ * Replaces selected lines.
+ * @param	TextArea
+ * @param	String
+ * @param	bool
+ * @param	bool
+ * @return	void
+ */
+Cz.Selection.replaceLines = function (textarea, text, replaceAlways, selectReplacedText) {
+	if(typeof replaceAlways === "undefined")
+	{
+		replaceAlways = false;
+	}
+
+	var start = Cz.Selection.getStartLinePos(textarea);
+	var end = Cz.Selection.getEndLinePos(textarea);
+
+	if(start !== end || replaceAlways)
+	{
+		this.inputText(textarea, text, start, end);
+		// textarea.value = textarea.value.substring(0, start) +
+		// 	text +
+		// 	textarea.value.substring(end);
+
+		if(typeof selectReplacedText === 'undefined')
+		{
+			selectReplacedText = true;
+		}
+
+		if(selectReplacedText)
+		{
+			this.setPosition(textarea, start, start + text.length);
+		}
+		else // set cursor on end position
+		{
+			this.setPosition(textarea, start + text.length, start + text.length);
+		}
+	}
+};
+
+
+
+/**
  * Wraps selected text.
  * @param	TextArea
  * @param	String  prefix
